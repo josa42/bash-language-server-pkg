@@ -1,0 +1,32 @@
+name: Publish
+
+on: [ release ]
+
+jobs:
+  publish:
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      matrix:
+        os: [ 'macos', 'ubuntu', 'windows' ]
+    steps:
+      - uses: 'actions/checkout@master'
+      - uses: actions/setup-node@master
+        with:
+          node-version: '10.x'
+      - run: npm install
+      - run: node bundle.js ${{ matrix.os }}
+      - uses: actions/upload-artifact@master
+        with:
+          name: bundle-${{ matrix.os }}
+          path: bundle/bash-language-server.zip
+      # - run: bundle/bash-language-server -h
+      - uses: "JasonEtco/upload-to-release@master"
+        with:
+          args: bundle/bash-language-server.zip
+
+# action "Upload to release" {
+#   uses = "JasonEtco/upload-to-release@master"
+#   args = "my-image.tar"
+#   secrets = ["GITHUB_TOKEN"]
+#   needs = ["Save the image"]
+# }
