@@ -1,0 +1,18 @@
+{
+  "name": "bash-language-server-pkg",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "pkg ./node_modules/.bin/bash-language-server --out-dir dist",
+    "postbuild": "find node_modules -name '*.node' -exec cp {} dist \\;",
+    "bundle": "mkdir -p bundles && cd dist && "
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "adm-zip": "^0.4.13",
+    "bash-language-server": "^1.5.6",
+    "pkg": "^4.4.0"
+  }
+}
